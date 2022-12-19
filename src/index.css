@@ -5,6 +5,7 @@
 * {
   outline: none;
   user-select: none;
+  scroll-behavior: smooth;
   -webkit-user-select: none;
   font-family: "Raleway", sans-serif;
   -webkit-tap-highlight-color: transparent;

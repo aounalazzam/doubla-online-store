@@ -4,16 +4,32 @@
  */
 
 import styled from "styled-components";
+import { useEffect, useState } from "react";
 
-const NavBarContainer = styled.div`
+const NavBarContainer = styled.header`
+  z-index: 10;
   height: 75px;
   display: flex;
   padding: 0 15px;
   background: #8b5cf6;
   align-items: center;
+  transition: 0.2s all;
 
   @media (max-width: 500px) {
     padding: 0 10px;
+  }
+
+  @media (max-width: 450px) {
+    padding: 0 7px;
+  }
+
+  &.sticky {
+    top: 15px;
+    left: 0px;
+    margin: 0 10px;
+    position: sticky;
+    border-radius: 5px;
+    transition: 0.2s all;
   }
 `;
 
@@ -25,11 +41,15 @@ const NavBarTextLogo = styled.h1`
   @media (max-width: 500px) {
     font-size: 30px;
   }
+
+  @media (max-width: 450px) {
+    font-size: 22px;
+  }
 `;
 
 const NavBarSearchBox = styled.input`
   border: 0;
-  width: 57%;
+  width: 100%;
   color: #fff;
   padding: 10px;
   font-size: 20px;
@@ -110,8 +130,22 @@ const NavBarIconButton = styled.button`
 `;
 
 function NavBar() {
+  const [isSticky, setSticky] = useState(0);
+
+  useEffect(() => {
+    const handleGetScrollPos = () => {
+      setSticky(document.documentElement.scrollTop > 0);
+    };
+
+    window.addEventListener("scroll", handleGetScrollPos);
+
+    return () => {
+      window.removeEventListener("scroll", handleGetScrollPos);
+    };
+  }, []);
+
   return (
-    <NavBarContainer>
+    <NavBarContainer className={isSticky ? "sticky" : null}>
       <NavBarTextLogo>Vellion</NavBarTextLogo>
       <NavBarSearchBox placeholder="What Are You Looking For?" />
       <NavBarButtonsContainer>

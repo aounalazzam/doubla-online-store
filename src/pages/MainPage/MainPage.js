@@ -4,11 +4,13 @@
  */
 
 import { Banner } from "./Banner";
+import { Products } from "./Products";
 
 function MainPage() {
   return (
     <>
       <Banner />
+      <Products />
     </>
   );
 }

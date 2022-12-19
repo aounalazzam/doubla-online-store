@@ -9,6 +9,10 @@ import BannerImage from "../../images/banner.jpg";
 const BannerContainer = styled.div`
   display: flex;
   padding: 50px;
+
+  @media (max-width: 500px) {
+    padding: 25px;
+  }
 `;
 
 const BannerImg = styled.img`
@@ -19,12 +23,22 @@ const BannerImg = styled.img`
   height: 1000px;
   position: absolute;
   border-end-start-radius: 50px;
+
+  @media (max-width: 900px) {
+    top: 0%;
+    width: 100vw;
+    border-end-start-radius: 0px;
+  }
+
+  @media (max-width: 450px) {
+    height: 600px;
+  }
 `;
 
 const BannerDetails = styled.div`
-  width: 600px;
+  width: 70%;
   padding: 25px;
-  height: 500px;
+  height: 650px;
   display: flex;
   border-radius: 20px;
   align-items: center;
@@ -32,31 +46,32 @@ const BannerDetails = styled.div`
   justify-content: center;
   background: rgba(139, 92, 246, 0.48);
 
+  @media (max-width: 900px) {
+    width: 100%;
+    padding: 5px;
+  }
+
+  @media (max-width: 450px) {
+    height: 450px;
+  }
+
   & > div {
+    margin: 0 auto 0 50px;
+
+    @media (max-width: 900px) {
+      margin: 0 auto;
+    }
+
     & > p {
       margin: 0;
-      font-size: 64px;
+      font-size: 5.5vw;
       font-weight: 600;
+
+      @media (max-width: 900px) {
+        font-size: 9.5vw;
+        text-align: center;
+      }
     }
-  }
-`;
-
-const BannerOfferBadge = styled.div`
-  top: 145px;
-  left: 470px;
-  width: 175px;
-  height: 175px;
-  padding: 10px;
-  display: flex;
-  position: absolute;
-  align-items: center;
-  background: #8b5cf6;
-  border-radius: 150px;
-  flex-direction: column;
-  justify-content: center;
-
-  & > p {
-    color: #fff;
   }
 `;
 
@@ -64,16 +79,21 @@ const BannerButton = styled.button`
   border: 0px;
   color: #fff;
   display: flex;
-  font-size: 18px;
+  padding: 20px;
+  font-size: 20px;
   font-weight: 700;
   margin-top: 25px;
   margin-left: 50px;
   margin-right: auto;
   width: max-content;
   border-radius: 7px;
-  padding: 10px 15px;
   align-items: center;
   background: #8b5cf6;
+
+  @media (max-width: 500px) {
+    padding: 10px;
+    font-size: 18px;
+  }
 
   & > span {
     margin-left: 10px;
@@ -92,16 +112,12 @@ function Banner() {
     <BannerContainer>
       <BannerImg src={BannerImage} alt="banner_img" />
       <BannerDetails>
-        <BannerOfferBadge>
-          <p>40%</p>
-          <p>OFF</p>
-        </BannerOfferBadge>
-        <div style={{ marginTop: "50px" }}>
+        <div>
           <p>Make A</p>
           <p style={{ color: "#8b5cf6" }}>Statement</p>
           <p>Wherever You Go</p>
         </div>
-        <BannerButton>
+        <BannerButton onClick={() => window.location.replace("/#products")}>
           See Products
           <span className="material-symbols-outlined">arrow_forward</span>
         </BannerButton>
