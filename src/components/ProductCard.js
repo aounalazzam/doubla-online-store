@@ -3,12 +3,13 @@
  * This Source Code Is Written By Aoun Alazzam Under MIT License
  */
 
+import { useState } from "react";
 import styled from "styled-components";
-import BannerImage from "../images/banner.jpg";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const Card = styled.div`
   width: 375px;
-  height: 500px;
+  height: 450px;
   display: flex;
   margin: 0 10px;
   padding: 25px 20px;
@@ -16,23 +17,37 @@ const Card = styled.div`
   flex-direction: column;
   background: rgb(138 92 245 / 48%);
   box-shadow: 2px 2px 6px 0px rgb(138 92 245 / 60%);
+
+  @media (max-width: 500px) {
+    width: 375px;
+    height: 400px;
+  }
 `;
 
 const CardImageViewer = styled.div`
   display: flex;
 
   & > img {
-    width: 265px;
+    width: 235px;
     height: 325px;
     margin: 0 10px;
     border-radius: 10px;
     border: 2px solid rgb(138 92 245);
+
+    @media (max-width: 500px) {
+      width: 200px;
+      height: 270px;
+    }
   }
 
   & > div {
     display: flex;
     margin: 0 auto;
     flex-direction: column;
+
+    @media (max-width: 500px) {
+      display: none;
+    }
   }
 
   & > div > img {
@@ -47,6 +62,7 @@ const CardImageViewer = styled.div`
 
 const CardDetails = styled.div`
   display: flex;
+  height: 100%;
   align-items: center;
   flex-direction: column;
 
@@ -54,29 +70,34 @@ const CardDetails = styled.div`
     margin: 10px;
     color: #8b5cf6;
     font-size: 25px;
+    margin-top: auto;
     font-weight: bold;
-  }
+    margin-right: auto;
 
-  & > p:nth-child(2) {
-    margin: 10px;
-    font-size: 20px;
-    font-weight: bold;
-    color: rgb(138 92 245 / 53%);
+    @media (max-width: 500px) {
+      font-size: 22px;
+    }
   }
 
   & > div {
     width: 100%;
     display: flex;
+    margin-top: auto;
     align-items: center;
   }
 
   & > div > p {
     margin: 5px;
+    height: 100%;
     font-size: 24px;
     font-weight: bold;
     margin-right: auto;
     color: rgb(138 92 245 / 64%);
     font-family: "Inter", sans-serif;
+
+    @media (max-width: 500px) {
+      font-size: 18px;
+    }
   }
 `;
 
@@ -113,26 +134,66 @@ const CardButton = styled.div`
   }
 `;
 
-function ProductCard() {
+function ProductCard({ product }) {
+  const { images, thumbnail, title, price } = product;
+
+  const [image1, image2, image3, image4] = images;
+
+  const [image, setImage] = useState(thumbnail);
+
+  const handleViewImage = (image) => {
+    return () => {
+      setImage(image);
+    };
+  };
+
+  const handleStopViewImage = () => {
+    setImage(thumbnail);
+  };
+
   return (
     <Card>
       <CardImageViewer>
-        <img src={BannerImage} alt="img" />
+        <LazyLoadImage src={image} width={235} height={325} alt="main_img" />
         <div>
-          <img src={BannerImage} alt="img" />
-          <img src={BannerImage} alt="img" />
-          <img src={BannerImage} alt="img" />
-          <img src={BannerImage} alt="img" />
+          <LazyLoadImage
+            alt="img1"
+            width={75}
+            height={75}
+            src={image1}
+            onMouseLeave={handleStopViewImage}
+            onMouseEnter={handleViewImage(image1)}
+          />
+          <LazyLoadImage
+            alt="img2"
+            width={75}
+            height={75}
+            src={image2}
+            onMouseLeave={handleStopViewImage}
+            onMouseEnter={handleViewImage(image2)}
+          />
+          <LazyLoadImage
+            alt="img3"
+            width={75}
+            height={75}
+            src={image3}
+            onMouseLeave={handleStopViewImage}
+            onMouseEnter={handleViewImage(image3)}
+          />
+          <LazyLoadImage
+            alt="img4"
+            width={75}
+            height={75}
+            src={image4}
+            onMouseLeave={handleStopViewImage}
+            onMouseEnter={handleViewImage(image4)}
+          />
         </div>
       </CardImageViewer>
       <CardDetails>
-        <p>Fog Scent Xpressio Perfume</p>
-        <p>
-          Product details of Best Fog Scent Xpressio Perfume 100ml For Men cool
-          long lasting perfumes for Men
-        </p>
+        <p>{title.capitalize()}</p>
         <div>
-          <p>Price : 13$</p>
+          <p>Price : {price}$</p>
           <CardButtonsContainer>
             <CardButton>
               <span className="material-symbols-outlined">favorite</span>

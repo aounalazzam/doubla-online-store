@@ -4,7 +4,9 @@
  */
 
 import styled from "styled-components";
+import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const NavBarContainer = styled.header`
   z-index: 10;
@@ -36,6 +38,7 @@ const NavBarContainer = styled.header`
 const NavBarTextLogo = styled.h1`
   color: #fff;
   font-size: 50px;
+  cursor: pointer;
   font-weight: 700;
 
   @media (max-width: 500px) {
@@ -130,6 +133,7 @@ const NavBarIconButton = styled.button`
 `;
 
 function NavBar() {
+  const navigate = useNavigate();
   const [isSticky, setSticky] = useState(0);
 
   useEffect(() => {
@@ -144,9 +148,17 @@ function NavBar() {
     };
   }, []);
 
+  const handleGoToCart = () => {
+    if (localStorage.getItem("auth") !== null) {
+      return navigate("/cart");
+    }
+
+    toast("You Must Sign In To View Your Cart");
+  };
+
   return (
     <NavBarContainer className={isSticky ? "sticky" : null}>
-      <NavBarTextLogo>Vellion</NavBarTextLogo>
+      <NavBarTextLogo onClick={() => navigate("/")}>Vellion</NavBarTextLogo>
       <NavBarSearchBox placeholder="What Are You Looking For?" />
       <NavBarButtonsContainer>
         <NavBarButton>
@@ -154,12 +166,9 @@ function NavBar() {
           Sign In
         </NavBarButton>
         <NavBarIconButton>
-          <span className="material-symbols-outlined">notifications</span>
-        </NavBarIconButton>
-        <NavBarIconButton>
           <span className="material-symbols-outlined">favorite</span>
         </NavBarIconButton>
-        <NavBarIconButton>
+        <NavBarIconButton onClick={handleGoToCart}>
           <span className="material-symbols-outlined">shopping_cart</span>
         </NavBarIconButton>
       </NavBarButtonsContainer>

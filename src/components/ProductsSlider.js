@@ -8,13 +8,19 @@ import { useLayoutEffect, useRef, useState } from "react";
 
 const Products = styled.div`
   width: 95vw;
+  height: 520px;
   display: flex;
   padding: 10px 0;
 
   & > div {
+    width: 100%;
     display: flex;
     padding: 10px 0;
     overflow: hidden;
+
+    @media (max-width: 500px) {
+      overflow: auto;
+    }
   }
 
   @media (max-width: 1280px) {
@@ -43,6 +49,10 @@ const ProductMoveButton = styled.button`
     margin: 0 5px;
     font-size: 35px;
   }
+
+  @media (max-width: 500px) {
+    display: none;
+  }
 `;
 
 function ProductsSlider({ children, steps = 4 }) {
@@ -54,8 +64,6 @@ function ProductsSlider({ children, steps = 4 }) {
 
     if (productsViewer) {
       const stepWidth = (productsViewer.scrollWidth / steps) * viewerPos;
-
-      console.log(stepWidth, viewerPos);
 
       productsViewer.scrollTo(stepWidth, 0);
     }
