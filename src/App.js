@@ -8,6 +8,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { CartPage } from "./pages/CartPage/CartPage";
 import { MainPage } from "./pages/MainPage/MainPage";
 import { SignInPage } from "./pages/AuthPage/SignInPage";
+import { AppDataProvider } from "./context/AppDataContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { WishListPage } from "./pages/WishListPage/WishListPage";
 
@@ -15,14 +16,16 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <NavBar />
-        <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/wishlist" element={<WishListPage />} />
-          <Route path="/sign-in" element={<SignInPage />} />
-        </Routes>
-        <Footer />
+        <AppDataProvider>
+          <NavBar />
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/wishlist" element={<WishListPage />} />
+            <Route path="/sign-in" element={<SignInPage />} />
+          </Routes>
+          <Footer />
+        </AppDataProvider>
       </AuthProvider>
     </BrowserRouter>
   );

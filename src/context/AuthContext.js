@@ -27,9 +27,9 @@ function AuthProvider({ children }) {
 
     if (userData) {
       return JSON.parse(userData);
-    } else {
-      return {};
     }
+
+    return {};
   });
 
   const isAuthenticated = useRef(getAuthStatus());
