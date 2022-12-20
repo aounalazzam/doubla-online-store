@@ -41,6 +41,10 @@ const SignInContainer = styled.div`
     font-size: 1.2em;
     text-align: center;
   }
+
+  @media (max-width: 380px) {
+    padding: 0;
+  }
 `;
 
 const SignInFormContainer = styled.form`
@@ -115,7 +119,11 @@ function SignInPage() {
             placeholder="Password"
             onInput={(e) => setPassword(e.target.value)}
           />
-          <Checkbox label="Remember Me" />
+          <Checkbox
+            label="Remember Me"
+            value={rememberMe}
+            onChange={() => setRememberMe((rememberMe) => !rememberMe)}
+          />
         </SignInFormContainer>
         <Button
           disabled={isLoading}

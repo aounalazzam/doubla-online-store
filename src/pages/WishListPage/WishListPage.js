@@ -33,6 +33,7 @@ const WishListDetails = styled.div`
     color: #8b5cf6;
     font-weight: 600;
     font-size: 1.5em;
+    text-align: center;
   }
 `;
 

@@ -1,4 +1,4 @@
-# Vellion Online Perfume Store
+# Perfue Online Perfume Store
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
