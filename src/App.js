@@ -7,6 +7,7 @@ import { NavBar } from "./components/NavBar";
 import { CartPage } from "./pages/CartPage/CartPage";
 import { MainPage } from "./pages/MainPage/MainPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { WishListPage } from "./pages/WishListPage/WishListPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/wishlist" element={<WishListPage />} />
       </Routes>
       <Footer />
     </BrowserRouter>

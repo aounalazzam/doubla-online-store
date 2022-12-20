@@ -156,6 +156,14 @@ function NavBar() {
     toast("You Must Sign In To View Your Cart");
   };
 
+  const handleGoToWishList = () => {
+    if (localStorage.getItem("auth") !== null) {
+      return navigate("/wishlist");
+    }
+
+    toast("You Must Sign In To View Your Wishlist");
+  };
+
   return (
     <NavBarContainer className={isSticky ? "sticky" : null}>
       <NavBarTextLogo onClick={() => navigate("/")}>Vellion</NavBarTextLogo>
@@ -166,7 +174,12 @@ function NavBar() {
           Sign In
         </NavBarButton>
         <NavBarIconButton>
-          <span className="material-symbols-outlined">favorite</span>
+          <span
+            onClick={handleGoToWishList}
+            className="material-symbols-outlined"
+          >
+            favorite
+          </span>
         </NavBarIconButton>
         <NavBarIconButton onClick={handleGoToCart}>
           <span className="material-symbols-outlined">shopping_cart</span>
