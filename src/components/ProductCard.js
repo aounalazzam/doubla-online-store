@@ -12,10 +12,10 @@ const Card = styled.div`
   height: 450px;
   display: flex;
   margin: 0 10px;
+  background: #fff;
   padding: 25px 20px;
   border-radius: 10px;
   flex-direction: column;
-  background: rgb(138 92 245 / 48%);
   box-shadow: 2px 2px 6px 0px rgb(138 92 245 / 60%);
 
   @media (max-width: 500px) {
@@ -123,7 +123,7 @@ const CardButton = styled.div`
   align-items: center;
   transition: 0.2s all;
   justify-content: center;
-  background: rgb(255 255 255 / 40%);
+  background: #8b5cf67a;
 
   & > span {
     margin: 0 5px;
@@ -156,38 +156,46 @@ function ProductCard({ product }) {
       <CardImageViewer>
         <LazyLoadImage src={image} width={235} height={325} alt="main_img" />
         <div>
-          <LazyLoadImage
-            alt="img1"
-            width={75}
-            height={75}
-            src={image1}
-            onMouseLeave={handleStopViewImage}
-            onMouseEnter={handleViewImage(image1)}
-          />
-          <LazyLoadImage
-            alt="img2"
-            width={75}
-            height={75}
-            src={image2}
-            onMouseLeave={handleStopViewImage}
-            onMouseEnter={handleViewImage(image2)}
-          />
-          <LazyLoadImage
-            alt="img3"
-            width={75}
-            height={75}
-            src={image3}
-            onMouseLeave={handleStopViewImage}
-            onMouseEnter={handleViewImage(image3)}
-          />
-          <LazyLoadImage
-            alt="img4"
-            width={75}
-            height={75}
-            src={image4}
-            onMouseLeave={handleStopViewImage}
-            onMouseEnter={handleViewImage(image4)}
-          />
+          {image1 && (
+            <LazyLoadImage
+              alt="img1"
+              width={75}
+              height={75}
+              src={image1}
+              onMouseLeave={handleStopViewImage}
+              onMouseEnter={handleViewImage(image1)}
+            />
+          )}
+          {image2 && (
+            <LazyLoadImage
+              alt="img2"
+              width={75}
+              height={75}
+              src={image2}
+              onMouseLeave={handleStopViewImage}
+              onMouseEnter={handleViewImage(image2)}
+            />
+          )}
+          {image3 && (
+            <LazyLoadImage
+              alt="img3"
+              width={75}
+              height={75}
+              src={image3}
+              onMouseLeave={handleStopViewImage}
+              onMouseEnter={handleViewImage(image3)}
+            />
+          )}
+          {image4 && (
+            <LazyLoadImage
+              alt="img4"
+              width={75}
+              height={75}
+              src={image4}
+              onMouseLeave={handleStopViewImage}
+              onMouseEnter={handleViewImage(image4)}
+            />
+          )}
         </div>
       </CardImageViewer>
       <CardDetails>

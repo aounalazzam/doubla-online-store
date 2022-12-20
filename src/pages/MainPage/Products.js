@@ -33,18 +33,18 @@ function Products() {
   return (
     <ProductsContainer id="products">
       <h1>Products</h1>
-      <ProductsSlider steps={10}>
-        <ProductsLoader url="https://dummyjson.com/products?limit=10&skip=10">
+      <ProductsSlider steps={2}>
+        <ProductsLoader url="https://dummyjson.com/products/category/laptops">
           <ProductCard />
         </ProductsLoader>
       </ProductsSlider>
-      <ProductsSlider steps={10}>
-        <ProductsLoader url="https://dummyjson.com/products?limit=10&skip=10">
+      <ProductsSlider steps={2}>
+        <ProductsLoader url="https://dummyjson.com/products/category/smartphones">
           <ProductCard />
         </ProductsLoader>
       </ProductsSlider>
-      <ProductsSlider steps={10}>
-        <ProductsLoader url="https://dummyjson.com/products?limit=10&skip=10">
+      <ProductsSlider steps={2}>
+        <ProductsLoader url="https://dummyjson.com/products/category/automotive">
           <ProductCard />
         </ProductsLoader>
       </ProductsSlider>

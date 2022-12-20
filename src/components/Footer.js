@@ -72,7 +72,7 @@ function Footer() {
   return (
     <FooterContainer>
       <div>
-        <h1>Perfue</h1>
+        <h1>doubla</h1>
         <div>
           <p>Order Status</p>
           <p>Shipping & Delivery</p>

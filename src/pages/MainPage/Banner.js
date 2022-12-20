@@ -4,7 +4,8 @@
  */
 
 import styled from "styled-components";
-import BannerImage from "../../images/banner.jpg";
+import BannerTopImage from "../../images/banner-top.jpg";
+import BannerLeftImage from "../../images/banner-left.jpg";
 
 const BannerContainer = styled.div`
   display: flex;
@@ -16,13 +17,14 @@ const BannerContainer = styled.div`
 `;
 
 const BannerImg = styled.img`
-  right: 0;
-  top: -25%;
   z-index: -1;
-  width: 750px;
-  height: 1000px;
   position: absolute;
-  border-end-start-radius: 50px;
+  border: 3px solid #8b5cf6;
+  top: ${(props) => props.top};
+  left: ${(props) => props.left};
+  right: ${(props) => props.right};
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
 
   @media (max-width: 900px) {
     top: 0%;
@@ -64,16 +66,13 @@ const BannerDetails = styled.div`
 
     & > p {
       margin: 0;
+      color: #fff;
       font-size: 5.5vw;
       font-weight: 600;
 
       @media (max-width: 900px) {
         font-size: 9.5vw;
         text-align: center;
-      }
-
-      @media (max-width: 500px) {
-        color: #fff;
       }
     }
   }
@@ -115,7 +114,30 @@ const BannerButton = styled.button`
 function Banner() {
   return (
     <BannerContainer>
-      <BannerImg src={BannerImage} alt="banner_img" />
+      <BannerImg
+        top={"-25%"}
+        right={"0px"}
+        alt="banner_img"
+        width={"650px"}
+        height={"1000px"}
+        src={BannerTopImage}
+        style={{
+          borderRight: 0,
+          borderEndStartRadius: "50px",
+        }}
+      />
+      <BannerImg
+        top={"20%"}
+        left={"-3px"}
+        alt="banner_img"
+        width={"600px"}
+        height={"750px"}
+        src={BannerLeftImage}
+        style={{
+          borderEndEndRadius: "50px",
+          borderStartEndRadius: "50px",
+        }}
+      />
       <BannerDetails>
         <div>
           <p>Make A</p>

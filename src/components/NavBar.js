@@ -260,7 +260,7 @@ function NavBar() {
 
   return (
     <NavBarContainer className={isSticky ? "sticky" : null}>
-      <NavBarTextLogo onClick={() => navigate("/")}>Perfue</NavBarTextLogo>
+      <NavBarTextLogo onClick={() => navigate("/")}>doubla</NavBarTextLogo>
       <NavBarSearchBox placeholder="What Are You Looking For?" />
       <NavBarButtonsContainer>
         {auth.user !== null ? (
