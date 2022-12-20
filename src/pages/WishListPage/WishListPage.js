@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import styled from "styled-components";
 import { useNavigate } from "react-router";
 import { Button } from "../../components/Button";
+import { useAuth } from "../../hooks/useAuth";
 
 const WishListContainer = styled.div`
   height: 80vh;
@@ -36,10 +37,11 @@ const WishListDetails = styled.div`
 `;
 
 function WishListPage() {
+  const auth = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem("auth") === null) {
+    if (auth.isAuthenticated === false) {
       navigate("/");
       toast("You Must Sign In To View Your Wishlist");
     }

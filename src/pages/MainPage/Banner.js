@@ -71,6 +71,10 @@ const BannerDetails = styled.div`
         font-size: 9.5vw;
         text-align: center;
       }
+
+      @media (max-width: 500px) {
+        color: #fff;
+      }
     }
   }
 `;
@@ -93,6 +97,7 @@ const BannerButton = styled.button`
   @media (max-width: 500px) {
     padding: 10px;
     font-size: 18px;
+    margin: 15px auto;
   }
 
   & > span {

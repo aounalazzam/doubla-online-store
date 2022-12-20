@@ -12,12 +12,13 @@ const LoaderAnimation = keyframes`
 `;
 
 const Loader = styled.div`
+  margin: 0 10px;
+  border-radius: 50%;
   width: ${(props) => props.size || 75}px;
   height: ${(props) => props.size || 75}px;
-  border-radius: 50%;
-  border: 5px solid rgb(139 92 246 / 35%);
-  border-top: 5px solid #8b5cf6;
   animation: ${LoaderAnimation} 1s linear infinite;
+  border: 5px solid #${(props) => (!props.isLight ? "8b5cf659" : "ffffff8a")};
+  border-top: 5px solid #${(props) => (!props.isLight ? "8b5cf6" : "ffffff")};
 `;
 
 export { Loader };

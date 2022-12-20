@@ -4,9 +4,11 @@
  */
 
 import styled from "styled-components";
-import { useNavigate } from "react-router";
-import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
+import { useEffect, useRef, useState } from "react";
+import { useAuth } from "../hooks/useAuth";
+import { Loader } from "./Loader";
 
 const NavBarContainer = styled.header`
   z-index: 10;
@@ -132,7 +134,47 @@ const NavBarIconButton = styled.button`
   }
 `;
 
+const NavBarAccountButton = styled.div`
+  width: 45px;
+  height: 45px;
+  display: flex;
+  cursor: pointer;
+  background: white;
+  border-radius: 50%;
+  align-items: center;
+  transition: 0.2s all;
+  border: 2px solid #ba9cff;
+
+  & > p {
+    opacity: 0;
+    margin: auto;
+    color: #8b5cf6;
+    font-weight: 500;
+    text-indent: -9999px;
+  }
+
+  &:hover {
+    border-radius: 50px;
+    width: 150px;
+
+    & > p {
+      text-indent: 0;
+      opacity: 1;
+    }
+  }
+`;
+
+const NavBarAccountPicture = styled.img`
+  width: 45px;
+  height: 45px;
+  background: white;
+  border-radius: 50%;
+  border: 2px solid #ba9cff;
+  border-left: 0;
+`;
+
 function NavBar() {
+  const auth = useAuth();
   const navigate = useNavigate();
   const [isSticky, setSticky] = useState(0);
 
@@ -149,7 +191,7 @@ function NavBar() {
   }, []);
 
   const handleGoToCart = () => {
-    if (localStorage.getItem("auth") !== null) {
+    if (auth.isAuthenticated) {
       return navigate("/cart");
     }
 
@@ -157,11 +199,24 @@ function NavBar() {
   };
 
   const handleGoToWishList = () => {
-    if (localStorage.getItem("auth") !== null) {
+    if (auth.isAuthenticated) {
       return navigate("/wishlist");
     }
 
     toast("You Must Sign In To View Your Wishlist");
+  };
+
+  const handleGoToSignIn = () => {
+    if (!auth.isAuthenticated) {
+      return navigate("/sign-in");
+    }
+
+    toast("You Current Sign In You Must To Sign In Again");
+  };
+
+  const handleGoToSignOut = () => {
+    auth.signOut();
+    toast("You Sign Out We Hope Come Again!");
   };
 
   return (
@@ -169,10 +224,24 @@ function NavBar() {
       <NavBarTextLogo onClick={() => navigate("/")}>Vellion</NavBarTextLogo>
       <NavBarSearchBox placeholder="What Are You Looking For?" />
       <NavBarButtonsContainer>
-        <NavBarButton>
-          <span className="material-icons">person</span>
-          Sign In
-        </NavBarButton>
+        {auth.user !== null ? (
+          <>
+            {!auth.isAuthenticated ? (
+              <NavBarButton onClick={handleGoToSignIn}>
+                <span className="material-icons">person</span>
+                Sign In
+              </NavBarButton>
+            ) : (
+              <NavBarAccountButton>
+                <NavBarAccountPicture src={auth.user.image} alt="user_img" />
+                <p onClick={handleGoToSignOut}>Sign Out</p>
+              </NavBarAccountButton>
+            )}
+          </>
+        ) : (
+          <Loader size={20} isLight />
+        )}
+
         <NavBarIconButton>
           <span
             onClick={handleGoToWishList}

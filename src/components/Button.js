@@ -3,7 +3,13 @@
  * This Source Code Is Written By Aoun Alazzam Under MIT License
  */
 
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const LoaderAnimation = keyframes`
+  0%{
+    transform: rotate(360deg);
+  }
+`;
 
 const Button = styled.button`
   border: 0;
@@ -18,6 +24,25 @@ const Button = styled.button`
 
   &:hover {
     background: #966df3;
+  }
+
+  &.loading {
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #c2a7ff;
+    cursor: not-allowed;
+  }
+
+  & > span.loading {
+    width: 18px;
+    height: 18px;
+    margin: 0 10px;
+    border-radius: 50%;
+    border: 3px solid #ffffff59;
+    border-top: 3px solid #f2ecff;
+    animation: ${LoaderAnimation} 1s linear infinite;
   }
 `;
 

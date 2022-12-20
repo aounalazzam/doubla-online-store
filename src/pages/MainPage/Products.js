@@ -16,14 +16,23 @@ const ProductsContainer = styled.div`
   @media (max-width: 500px) {
     padding: 30px;
   }
+
+  & > h1 {
+    margin: 25px;
+    color: #8b5cf6;
+    font-size: 80px;
+    text-align: center;
+
+    @media (max-width: 425px) {
+      font-size: 50px;
+    }
+  }
 `;
 
 function Products() {
   return (
     <ProductsContainer id="products">
-      <h1 style={{ color: "#8b5cf6", fontSize: "80px", textAlign: "center" }}>
-        Products
-      </h1>
+      <h1>Products</h1>
       <ProductsSlider steps={10}>
         <ProductsLoader url="https://dummyjson.com/products?limit=10&skip=10">
           <ProductCard />
