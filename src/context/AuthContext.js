@@ -28,7 +28,7 @@ function AuthProvider({ children }) {
     if (userData) {
       return JSON.parse(userData);
     }
-
+    
     return {};
   });
 

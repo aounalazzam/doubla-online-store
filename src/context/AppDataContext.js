@@ -8,51 +8,66 @@ import React, { useState } from "react";
 const getDataFromLocalStorage = (key) => {
   const cartProducts = localStorage.getItem(key);
 
-  if (cartProducts) {
+  if (cartProducts !== null) {
     return JSON.parse(cartProducts);
   }
 
-  return {};
+  return [];
 };
 
 const AppDataContext = React.createContext({
-  cart: getDataFromLocalStorage("cart"),
-  wishlist: getDataFromLocalStorage("wish-list"),
+  cart: null,
+  wishlist: null,
 });
 
 function AppDataProvider({ children }) {
+  const [wishlist, setWishlist] = useState(
+    getDataFromLocalStorage("wish-list")
+  );
   const [cart, setCart] = useState(getDataFromLocalStorage("cart"));
-  const [wishList, setWishList] = useState(getDataFromLocalStorage("wish-list"));
 
   const updateCart = (item, operation) => {
     setCart((cart) => {
-      if (operation === "add") {
-        return [...cart, item];
-      }
-      if (operation === "remove") {
-        return [...cart].filter(cart.title !== item.title);
-      }
-    });
+      let data;
 
-    localStorage.setItem("cart", JSON.stringify(cart));
+      cart = cart || [];
+
+      if (operation === "add") {
+        data = [...cart, { ...item, quantity: 1 }];
+      }
+
+      if (operation === "remove") {
+        data = cart.filter((prod) => prod.title !== item.title);
+      }
+
+      localStorage.setItem("cart", JSON.stringify(data));
+
+      return data;
+    });
   };
 
   const updateWishlist = (item, operation) => {
-    setWishList((wishlist) => {
+    setWishlist((wishlist) => {
+      let data;
+
+      wishlist = wishlist || [];
+
       if (operation === "add") {
-        return [...wishlist, item];
+        data = [...wishlist, item];
       }
       if (operation === "remove") {
-        return [...wishlist].filter(wishlist.title !== item.title);
+        data = wishlist.filter((prod) => prod.title !== item.title);
       }
-    });
 
-    localStorage.setItem("wish-list", JSON.stringify(wishList));
+      localStorage.setItem("wish-list", JSON.stringify(wishlist));
+
+      return data;
+    });
   };
 
   return (
     <AppDataContext.Provider
-      value={{ updateCart, updateWishlist, cart, wishList }}
+      value={{ updateCart, updateWishlist, cart, wishlist }}
     >
       {children}
     </AppDataContext.Provider>

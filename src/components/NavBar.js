@@ -275,7 +275,7 @@ function NavBar() {
                 <NavBarAccountPicture src={auth.user.image} alt="user_img" />
                 <span
                   onClick={handleGoToSignOut}
-                  class="material-symbols-outlined"
+                  className="material-symbols-outlined"
                 >
                   logout
                 </span>

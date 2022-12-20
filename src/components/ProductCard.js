@@ -5,7 +5,10 @@
 
 import { useState } from "react";
 import styled from "styled-components";
+import { useAppData } from "../hooks/useAppData";
+import { useAuth } from "../hooks/useAuth";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { toast } from "react-toastify";
 
 const Card = styled.div`
   width: 375px;
@@ -130,7 +133,7 @@ const CardButton = styled.div`
   }
 
   &:hover {
-    background: rgb(255 255 255 / 30%);
+    background: #ba9cff;
   }
 `;
 
@@ -141,6 +144,16 @@ function ProductCard({ product }) {
 
   const [image, setImage] = useState(thumbnail);
 
+  const data = useAppData();
+
+  const auth = useAuth();
+
+  const isProductInWishlist =
+    data.wishlist.find((prod) => prod.title === product.title) !== undefined;
+
+  const isProductInCart =
+    data.cart.find((prod) => prod.title === product.title) !== undefined;
+
   const handleViewImage = (image) => {
     return () => {
       setImage(image);
@@ -149,6 +162,34 @@ function ProductCard({ product }) {
 
   const handleStopViewImage = () => {
     setImage(thumbnail);
+  };
+
+  const handleAddToCart = () => {
+    if (!auth.isAuthenticated) {
+      return toast("You Must Sign In To Add This Product In You Cart");
+    }
+
+    data.updateCart(product, "add");
+    toast("Product Added to Cart");
+  };
+
+  const handleAddToWishList = () => {
+    if (!auth.isAuthenticated) {
+      return toast("You Must Sign In To Add This Product In You Wishlist");
+    }
+
+    data.updateWishList(product, "add");
+    toast("Product Added to Your Wishlist");
+  };
+
+  const handleRemoveFromCart = () => {
+    data.updateCart(product, "remove");
+    toast("Product Remove to Cart");
+  };
+
+  const handleRemoveFromWishList = () => {
+    data.updateWishList(product, "remove");
+    toast("Product Removed From Your Wishlist");
   };
 
   return (
@@ -204,12 +245,38 @@ function ProductCard({ product }) {
           <p>Price : {price}$</p>
           <CardButtonsContainer>
             <CardButton>
-              <span className="material-symbols-outlined">favorite</span>
+              {isProductInWishlist ? (
+                <span
+                  onClick={handleRemoveFromWishList}
+                  className="material-symbols-outlined"
+                >
+                  close
+                </span>
+              ) : (
+                <span
+                  onClick={handleAddToWishList}
+                  className="material-symbols-outlined"
+                >
+                  favorite
+                </span>
+              )}
             </CardButton>
             <CardButton>
-              <span className="material-symbols-outlined">
-                add_shopping_cart
-              </span>
+              {isProductInCart ? (
+                <span
+                  onClick={handleRemoveFromCart}
+                  className="material-symbols-outlined"
+                >
+                  close
+                </span>
+              ) : (
+                <span
+                  onClick={handleAddToCart}
+                  className="material-symbols-outlined"
+                >
+                  add_shopping_cart
+                </span>
+              )}
             </CardButton>
           </CardButtonsContainer>
         </div>
