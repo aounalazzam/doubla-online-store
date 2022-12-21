@@ -85,6 +85,7 @@ const NavBarButtonsContainer = styled.div`
   align-items: center;
 
   @media (max-width: 900px) {
+    overflow: hidden;
     margin-left: auto;
   }
 `;
@@ -102,6 +103,10 @@ const NavBarButton = styled.button`
   align-items: center;
   transition: 0.2s all;
   background: rgb(255 255 255 / 48%);
+
+  @media (max-width: 350px) {
+    padding: 5px 10px;
+  }
 
   @media (max-width: 360px) {
     margin: 0 2.5px;
@@ -146,6 +151,11 @@ const NavBarIconButton = styled.button`
     background: rgb(255 255 255 / 40%);
   }
 
+  @media (max-width: 350px) {
+    width: 35px;
+    height: 35px;
+  }
+
   @media (max-width: 360px) {
     margin: 0 2.5px;
   }
@@ -182,6 +192,11 @@ const NavBarAccountButton = styled.div`
     color: #8b5cf6;
   }
 
+  @media (max-width: 350px) {
+    width: 35px;
+    height: 35px;
+  }
+
   &:hover {
     border-radius: 50px;
 
@@ -200,6 +215,10 @@ const NavBarAccountButton = styled.div`
         display: inline-block;
       }
     }
+
+    @media (max-width: 350px) {
+      width: 60px;
+    }
   }
 `;
 
@@ -210,6 +229,11 @@ const NavBarAccountPicture = styled.img`
   border-radius: 50%;
   border: 2px solid #ba9cff;
   border-left: 0;
+
+  @media (max-width: 350px) {
+    width: inherit;
+    height: inherit;
+  }
 `;
 
 function NavBar() {

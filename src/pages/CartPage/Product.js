@@ -3,8 +3,8 @@
  * This Source Code Is Written By Aoun Alazzam Under MIT License
  */
 
-import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useEffect, useState } from "react";
 import { useAppData } from "../../hooks/useAppData";
 
 const CartProduct = styled.div`
@@ -17,11 +17,21 @@ const CartProduct = styled.div`
   align-items: center;
   box-shadow: 2px 2px 6px 0px rgb(138 92 245 / 18%);
 
+  @media (max-width: 500px) {
+    height: 325px;
+    flex-direction: column;
+  }
+
   & > img {
     width: 200px;
     height: 150px;
     margin: 0 20px;
     border-radius: 5px;
+
+    @media (max-width: 500px) {
+      margin: 10px 20px;
+      border: 1px solid #f5f5f5c2;
+    }
   }
 
   & > div:nth-child(2) {
@@ -30,6 +40,11 @@ const CartProduct = styled.div`
 
     & > * {
       margin: 5px;
+
+      @media (max-width: 500px) {
+        font-size: 20px;
+        text-align: center;
+      }
     }
 
     & > p:nth-child(1) {
@@ -41,6 +56,10 @@ const CartProduct = styled.div`
       color: #afafaf;
       font-size: 18px;
       font-weight: 500;
+
+      @media (max-width: 500px) {
+        display: none;
+      }
     }
 
     & > p:nth-child(3) {
@@ -50,16 +69,23 @@ const CartProduct = styled.div`
   }
 
   & > div:nth-child(3) {
-    width: 125px;
     margin: auto;
     display: flex;
     margin-right: 0;
+    min-width: 125px;
     flex-direction: column;
 
+    @media (max-width: 500px) {
+      width: 100%;
+      flex-direction: row;
+    }
+
     & > p {
-      margin: auto;
+      margin: 0 20%;
       font-size: 30px;
       font-weight: 500;
+      margin-top: 15px;
+      font-family: "Inter", sans-serif;
     }
 
     & > div {
@@ -89,6 +115,10 @@ const CartProduct = styled.div`
       align-items: center;
       background: #8b5cf6;
       justify-content: center;
+
+      @media (max-width: 500px) {
+        margin: 10px 5px;
+      }
     }
   }
 `;
@@ -98,9 +128,11 @@ function Product({ product }) {
 
   const [itemsQuantity, setItemsQuantity] = useState(quantity);
 
-  useEffect(() => {}, [itemsQuantity]);
-
   const data = useAppData();
+
+  useEffect(() => {
+    data.updateCart({ ...product, quantity: itemsQuantity }, "update");
+  }, [itemsQuantity]);
 
   const handleRemoveProduct = () => {
     data.updateCart(product, "remove");

@@ -19,6 +19,10 @@ const FooterContainer = styled.footer`
     height: 100%;
   }
 
+  @media (max-width: 300px) {
+    margin: 0 15px;
+  }
+
   & > div {
     padding: 20px;
     display: flex;
@@ -35,6 +39,10 @@ const FooterContainer = styled.footer`
 
       @media (max-width: 500px) {
         font-size: 4em;
+      }
+
+      @media (max-width: 400px) {
+        font-size: 3em;
       }
     }
 
@@ -65,6 +73,10 @@ const FooterContainer = styled.footer`
     color: #fff;
     font-size: 1em;
     margin: auto auto 0 auto;
+
+    @media (max-width: 400px) {
+      text-align: center;
+    }
   }
 `;
 

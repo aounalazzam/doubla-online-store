@@ -5,14 +5,14 @@
 
 import React, { useState } from "react";
 
-const getDataFromLocalStorage = (key) => {
+const getDataFromLocalStorage = (key, defaultValue) => {
   const cartProducts = localStorage.getItem(key);
 
   if (cartProducts !== null) {
     return JSON.parse(cartProducts);
   }
 
-  return [];
+  return defaultValue;
 };
 
 const AppDataContext = React.createContext({
@@ -22,52 +22,70 @@ const AppDataContext = React.createContext({
 
 function AppDataProvider({ children }) {
   const [wishlist, setWishlist] = useState(
-    getDataFromLocalStorage("wish-list")
+    getDataFromLocalStorage("wish-list", [])
   );
-  const [cart, setCart] = useState(getDataFromLocalStorage("cart"));
+  const [cart, setCart] = useState(getDataFromLocalStorage("cart", []));
+
+  const emptyCart = () => {
+    localStorage.setItem("cart", JSON.stringify([]));
+    setCart([]);
+  };
 
   const updateCart = (item, operation) => {
-    setCart((cart) => {
-      let data;
+    let data;
 
-      cart = cart || [];
+    if (operation === "add") {
+      data = [...cart, { ...item, quantity: 1 }];
+    }
 
-      if (operation === "add") {
-        data = [...cart, { ...item, quantity: 1 }];
-      }
+    if (operation === "update") {
+      data = cart.map((prod) => {
+        if (prod.title === item.title) {
+          return item;
+        }
 
-      if (operation === "remove") {
-        data = cart.filter((prod) => prod.title !== item.title);
-      }
+        return prod;
+      });
+    }
 
-      localStorage.setItem("cart", JSON.stringify(data));
+    if (operation === "remove") {
+      data = cart.filter((prod) => prod.title !== item.title);
+    }
 
-      return data;
-    });
+    localStorage.setItem("cart", JSON.stringify(data));
+
+    setCart(data);
   };
 
   const updateWishlist = (item, operation) => {
-    setWishlist((wishlist) => {
-      let data;
+    let data;
 
-      wishlist = wishlist || [];
+    if (operation === "add") {
+      data = [...wishlist, item];
+    }
 
-      if (operation === "add") {
-        data = [...wishlist, item];
-      }
-      if (operation === "remove") {
-        data = wishlist.filter((prod) => prod.title !== item.title);
-      }
+    if (operation === "update") {
+      data = wishlist.map((prod) => {
+        if (prod.title === item.title) {
+          return item;
+        }
 
-      localStorage.setItem("wish-list", JSON.stringify(wishlist));
+        return prod;
+      });
+    }
 
-      return data;
-    });
+    if (operation === "remove") {
+      data = wishlist.filter((prod) => prod.title !== item.title);
+    }
+
+    localStorage.setItem("wish-list", JSON.stringify(data));
+
+    setWishlist(data);
   };
 
   return (
     <AppDataContext.Provider
-      value={{ updateCart, updateWishlist, cart, wishlist }}
+      value={{ emptyCart, updateCart, updateWishlist, cart, wishlist }}
     >
       {children}
     </AppDataContext.Provider>

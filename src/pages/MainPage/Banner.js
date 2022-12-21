@@ -26,10 +26,42 @@ const BannerImg = styled.img`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
 
+  ${(props) =>
+    !props.hiddenOnMobile &&
+    `
+     @media(max-width:900px){
+      display: none;
+      border-radius: 0;
+      border-end-end-radius: 0px;
+      border-end-start-radius: 0px;
+     }
+  `}
+
+  ${(props) =>
+    !props.RoundOneRight &&
+    `
+    border-end-end-radius: 50px;
+    border-start-end-radius: 50px;
+          
+    @media (max-width: 900px) {
+        border-end-end-radius: 0px;
+        border-start-end-radius: 0px;
+    }
+  `}
+
+  ${(props) =>
+    !props.RoundOneLeft &&
+    `
+      border-end-start-radius: 50px;
+
+      @media (max-width: 900px) {
+        border-end-start-radius: 0px;
+      }
+  `}
+
   @media (max-width: 900px) {
     top: 0%;
     width: 100vw;
-    border-end-start-radius: 0px;
   }
 
   @media (max-width: 450px) {
@@ -117,26 +149,24 @@ function Banner() {
       <BannerImg
         top={"-25%"}
         right={"0px"}
+        RoundOneRight
+        hiddenOnMobile
         alt="banner_img"
         width={"650px"}
         height={"1000px"}
         src={BannerTopImage}
         style={{
           borderRight: 0,
-          borderEndStartRadius: "50px",
         }}
       />
       <BannerImg
         top={"20%"}
+        RoundOneLeft
         left={"-3px"}
         alt="banner_img"
         width={"600px"}
         height={"750px"}
         src={BannerLeftImage}
-        style={{
-          borderEndEndRadius: "50px",
-          borderStartEndRadius: "50px",
-        }}
       />
       <BannerDetails>
         <div>

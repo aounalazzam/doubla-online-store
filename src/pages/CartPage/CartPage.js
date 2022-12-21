@@ -4,19 +4,23 @@
  */
 
 import { useEffect } from "react";
+import { Product } from "./Product";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 import { useNavigate } from "react-router";
 import { useAuth } from "../../hooks/useAuth";
 import { Button } from "../../components/Button";
 import { useAppData } from "../../hooks/useAppData";
-import { Product } from "./Product";
 
 const CartContainer = styled.div`
   height: 85vh;
   display: flex;
   padding: 20px;
   flex-direction: column;
+
+  @media (max-width: 500px) {
+    height: auto;
+  }
 
   & > h1 {
     font-size: 3em;
@@ -28,23 +32,33 @@ const CartDetails = styled.div`
   height: 100%;
   display: flex;
 
+  @media (max-width: 500px) {
+    height: 100vh;
+    flex-direction: column;
+  }
+
   & > div {
     display: flex;
     flex-direction: column;
 
-    & > p {
+    & > h1 {
       color: #8b5cf6;
       font-weight: 600;
       font-size: 1.5em;
+      text-align: center;
     }
   }
 `;
 
 const CartProductsContainer = styled.div`
-  width: 70%;
+  width: 60%;
   height: 90%;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 500px) {
+    width: 100%;
+  }
 
   & > h2 {
     color: #8b5cf6;
@@ -62,11 +76,60 @@ const CartProductsContainer = styled.div`
 `;
 
 const CartPricingContainer = styled.div`
-  width: 30%;
+  width: 40%;
   height: 90%;
   display: flex;
   background: #fff;
   flex-direction: column;
+
+  @media (max-width: 500px) {
+    width: 100%;
+  }
+
+  & > h2 {
+    color: #8b5cf6;
+    font-size: 2em;
+    margin: 10px 15px;
+  }
+
+  & > span {
+    width: 100%;
+    height: 3px;
+    margin: 5px;
+    display: block;
+    background-color: #8b5cf657;
+  }
+
+  & > p {
+    margin: 10px;
+    color: #8b5cf6;
+    font-size: 28px;
+    font-weight: 700;
+
+    & > span {
+      float: right;
+      font-family: "Inter", sans-serif;
+    }
+  }
+
+  & > div {
+    height: 90%;
+    display: flex;
+    padding: 10px;
+    overflow: auto;
+    flex-direction: column;
+
+    & > p {
+      margin: 10px 0;
+      font-size: 18px;
+      font-weight: 500;
+
+      & > span {
+        float: right;
+        font-family: "Inter", sans-serif;
+      }
+    }
+  }
 `;
 
 function CartPage() {
@@ -81,13 +144,18 @@ function CartPage() {
     }
   }, []);
 
+  const handleCheckout = () => {
+    data.emptyCart();
+    toast("Your Cart Is Submitted! We Will Contact you shortly");
+  };
+
   return (
     <CartContainer>
       <h1>Cart</h1>
       <CartDetails>
         {data.cart.length === 0 ? (
           <div style={{ margin: "auto" }}>
-            <p>You Don`t Have Items</p>
+            <h1>You Don`t Have Items</h1>
             <Button
               style={{ margin: "20px 10px" }}
               onClick={() => navigate("/")}
@@ -105,7 +173,34 @@ function CartPage() {
                 ))}
               </div>
             </CartProductsContainer>
-            <CartPricingContainer></CartPricingContainer>
+            <CartPricingContainer>
+              <h2>Pricing</h2>
+              <div>
+                {data.cart.map(({ title, price, quantity }, indexOfProduct) => (
+                  <p>
+                    {title} x {quantity}
+                    <span> {price * quantity}$</span>
+                  </p>
+                ))}
+              </div>
+              <span></span>
+              <p>
+                Total{" "}
+                <span>
+                  {data.cart.reduce(
+                    (prev, current) => prev + current.quantity * current.price,
+                    0
+                  )}
+                  $
+                </span>
+              </p>
+              <Button onClick={handleCheckout}>
+                Checkout
+                <span className="material-symbols-outlined">
+                  shopping_cart_checkout
+                </span>
+              </Button>
+            </CartPricingContainer>
           </>
         )}
       </CartDetails>

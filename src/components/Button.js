@@ -15,12 +15,14 @@ const Button = styled.button`
   border: 0;
   color: #fff;
   margin: 10px;
+  display: flex;
   padding: 10px;
   font-size: 20px;
   font-weight: 700;
   border-radius: 5px;
-  transition: 0.2s all;
   background: #8b5cf6;
+  justify-content: center;
+  transition: 0.2s all ease;
 
   &:hover {
     background: #966df3;
@@ -33,6 +35,10 @@ const Button = styled.button`
     justify-content: center;
     background: #c2a7ff;
     cursor: not-allowed;
+  }
+
+  & > span.material-symbols-outlined {
+    margin: auto 10px;
   }
 
   & > span.loading {
