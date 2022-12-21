@@ -1,12 +1,13 @@
 {
   "name": "doubla-online-perfume-store",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.1",
+    "cross-env": "^7.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-lazy-load-image-component": "^1.5.6",
@@ -18,10 +19,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "cross-env NODE_ENV=development react-scripts start",
-    "build": "cross-env NODE_ENV=production react-scripts build",
-    "test": "cross-env NODE_ENV=development react-scripts test",
-    "eject": "cross-env NODE_ENV=development react-scripts eject"
+    "start": "npx cross-env NODE_ENV=development react-scripts start",
+    "build": "npx cross-env NODE_ENV=production react-scripts build",
+    "test": "npx cross-env NODE_ENV=development react-scripts test",
+    "eject": "npx cross-env NODE_ENV=development react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
