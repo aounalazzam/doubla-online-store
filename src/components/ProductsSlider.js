@@ -86,7 +86,9 @@ function ProductsSlider({ children, steps = 4 }) {
       <ProductMoveButton onClick={handleViewCard("prev")}>
         <span className="material-symbols-outlined">chevron_left</span>
       </ProductMoveButton>
-      <div ref={productsViewerRef}>{children}</div>
+      <div ref={productsViewerRef} style={{ height: "max-content" }}>
+        {children}
+      </div>
       <ProductMoveButton onClick={handleViewCard("next")}>
         <span className="material-symbols-outlined">chevron_right</span>
       </ProductMoveButton>

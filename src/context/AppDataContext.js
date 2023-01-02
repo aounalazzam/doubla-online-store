@@ -15,10 +15,7 @@ const getDataFromLocalStorage = (key, defaultValue) => {
   return defaultValue;
 };
 
-const AppDataContext = React.createContext({
-  cart: null,
-  wishlist: null,
-});
+const AppDataContext = React.createContext();
 
 function AppDataProvider({ children }) {
   const [wishlist, setWishlist] = useState(

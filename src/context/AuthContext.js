@@ -12,10 +12,7 @@ const getAuthStatus = () => {
   );
 };
 
-const AuthContext = React.createContext({
-  user: null,
-  isAuthenticated: getAuthStatus(),
-});
+const AuthContext = React.createContext();
 
 function AuthProvider({ children }) {
   const navigate = useNavigate();
@@ -28,7 +25,7 @@ function AuthProvider({ children }) {
     if (userData) {
       return JSON.parse(userData);
     }
-    
+
     return {};
   });
 

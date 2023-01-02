@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
+import { useAppData } from "../hooks/useAppData";
 
 const NavBarContainer = styled.header`
   z-index: 10;
@@ -56,37 +57,13 @@ const NavBarTextLogo = styled.h1`
   }
 `;
 
-const NavBarSearchBox = styled.input`
-  border: 0;
-  width: 100%;
-  color: #fff;
-  padding: 10px;
-  font-size: 20px;
-  margin: 5px 20px;
-  font-weight: 700;
-  border-radius: 5px;
-  background: rgb(255 255 255 / 17%);
-
-  &::placeholder {
-    color: rgb(255 255 255 / 48%);
-  }
-
-  @media (max-width: 450px) {
-    font-size: 17px;
-  }
-
-  @media (max-width: 900px) {
-    display: none;
-  }
-`;
-
 const NavBarButtonsContainer = styled.div`
   display: flex;
+  margin-left: auto;
   align-items: center;
 
   @media (max-width: 900px) {
     overflow: hidden;
-    margin-left: auto;
   }
 `;
 
@@ -147,6 +124,18 @@ const NavBarIconButton = styled.button`
     margin: 0 5px;
   }
 
+  & > span.badge {
+    width: 20px;
+    height: 20px;
+    color: #8b5cf6;
+    font-size: 14px;
+    border-radius: 50%;
+    position: absolute;
+    text-align: center;
+    margin: 0 0 35px 35px;
+    background-color: #fff;
+  }
+
   &:hover {
     background: rgb(255 255 255 / 40%);
   }
@@ -158,12 +147,6 @@ const NavBarIconButton = styled.button`
 
   @media (max-width: 360px) {
     margin: 0 2.5px;
-  }
-
-  &.search-btn {
-    @media (min-width: 900px) {
-      display: none;
-    }
   }
 `;
 
@@ -238,6 +221,7 @@ const NavBarAccountPicture = styled.img`
 
 function NavBar() {
   const auth = useAuth();
+  const data = useAppData();
   const navigate = useNavigate();
   const [isSticky, setSticky] = useState(0);
 
@@ -285,7 +269,6 @@ function NavBar() {
   return (
     <NavBarContainer className={isSticky ? "sticky" : null}>
       <NavBarTextLogo onClick={() => navigate("/")}>doubla</NavBarTextLogo>
-      <NavBarSearchBox placeholder="What Are You Looking For?" />
       <NavBarButtonsContainer>
         {auth.user !== null ? (
           <>
@@ -311,10 +294,10 @@ function NavBar() {
           <Loader size={20} isLight />
         )}
 
-        <NavBarIconButton className="search-btn">
-          <span className="material-symbols-outlined">search</span>
-        </NavBarIconButton>
         <NavBarIconButton>
+          {data.wishlist.length > 0 && (
+            <span className="badge">{data.wishlist.length}</span>
+          )}
           <span
             onClick={handleGoToWishList}
             className="material-symbols-outlined"
@@ -323,6 +306,9 @@ function NavBar() {
           </span>
         </NavBarIconButton>
         <NavBarIconButton onClick={handleGoToCart}>
+          {data.cart.length > 0 && (
+            <span className="badge">{data.cart.length}</span>
+          )}
           <span className="material-symbols-outlined">shopping_cart</span>
         </NavBarIconButton>
       </NavBarButtonsContainer>

@@ -14,7 +14,7 @@ const Card = styled.div`
   width: 375px;
   height: 450px;
   display: flex;
-  margin: 0 10px;
+  margin: 10px;
   background: #fff;
   padding: 25px 20px;
   border-radius: 10px;
@@ -76,6 +76,7 @@ const CardDetails = styled.div`
     margin-top: auto;
     font-weight: bold;
     margin-right: auto;
+    word-break: break-all;
 
     @media (max-width: 500px) {
       font-size: 22px;
@@ -178,7 +179,7 @@ function ProductCard({ product }) {
       return toast("You Must Sign In To Add This Product In You Wishlist");
     }
 
-    data.updateWishList(product, "add");
+    data.updateWishlist(product, "add");
     toast("Product Added to Your Wishlist");
   };
 
@@ -188,7 +189,7 @@ function ProductCard({ product }) {
   };
 
   const handleRemoveFromWishList = () => {
-    data.updateWishList(product, "remove");
+    data.updateWishlist(product, "remove");
     toast("Product Removed From Your Wishlist");
   };
 
@@ -244,39 +245,23 @@ function ProductCard({ product }) {
         <div>
           <p>Price : {price}$</p>
           <CardButtonsContainer>
-            <CardButton>
-              {isProductInWishlist ? (
-                <span
-                  onClick={handleRemoveFromWishList}
-                  className="material-symbols-outlined"
-                >
-                  close
-                </span>
-              ) : (
-                <span
-                  onClick={handleAddToWishList}
-                  className="material-symbols-outlined"
-                >
-                  favorite
-                </span>
-              )}
+            <CardButton
+              onClick={
+                isProductInWishlist
+                  ? handleRemoveFromWishList
+                  : handleAddToWishList
+              }
+            >
+              <span className="material-symbols-outlined">
+                {isProductInWishlist ? "close" : "favorite"}
+              </span>
             </CardButton>
-            <CardButton>
-              {isProductInCart ? (
-                <span
-                  onClick={handleRemoveFromCart}
-                  className="material-symbols-outlined"
-                >
-                  close
-                </span>
-              ) : (
-                <span
-                  onClick={handleAddToCart}
-                  className="material-symbols-outlined"
-                >
-                  add_shopping_cart
-                </span>
-              )}
+            <CardButton
+              onClick={isProductInCart ? handleRemoveFromCart : handleAddToCart}
+            >
+              <span className="material-symbols-outlined">
+                {isProductInCart ? "close" : "add_shopping_cart"}
+              </span>
             </CardButton>
           </CardButtonsContainer>
         </div>

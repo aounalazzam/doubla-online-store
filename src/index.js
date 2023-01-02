@@ -19,9 +19,10 @@ root.render(
     <App />
     <ToastContainer
       draggable
+      limit={1}
       rtl={false}
       theme="light"
-      autoClose={5000}
+      autoClose={3000}
       pauseOnFocusLoss
       newestOnTop={false}
       hideProgressBar={false}

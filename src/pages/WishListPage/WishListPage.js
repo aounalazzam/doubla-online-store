@@ -9,6 +9,8 @@ import styled from "styled-components";
 import { useNavigate } from "react-router";
 import { Button } from "../../components/Button";
 import { useAuth } from "../../hooks/useAuth";
+import { useAppData } from "../../hooks/useAppData";
+import { ProductCard } from "../../components/ProductCard";
 
 const WishListContainer = styled.div`
   height: 80vh;
@@ -35,10 +37,34 @@ const WishListDetails = styled.div`
     font-size: 1.5em;
     text-align: center;
   }
+
+  & > div {
+    display: flex;
+    flex-wrap: wrap;
+    height: max-content;
+    justify-content: center;
+
+    & > div {
+      height: 100%;
+
+      @media (max-width: 500px) {
+        width: 300px;
+      }
+
+      @media (max-width: 350px) {
+        width: 200px;
+      }
+
+      & > div > img {
+        margin: 10px auto;
+      }
+    }
+  }
 `;
 
 function WishListPage() {
   const auth = useAuth();
+  const data = useAppData();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -49,13 +75,30 @@ function WishListPage() {
   }, []);
 
   return (
-    <WishListContainer>
+    <WishListContainer
+      style={{
+        height: data.wishlist.length >= 4 ? "100%" : "80vh",
+      }}
+    >
       <h1>Wishlist</h1>
       <WishListDetails>
-        <p>You Don`t Have Items In Your WishList</p>
-        <Button style={{ margin: "20px 10px" }} onClick={() => navigate("/")}>
-          Start Shopping
-        </Button>
+        {data.wishlist.length === 0 ? (
+          <>
+            <p>You Don`t Have Items In Your WishList</p>
+            <Button
+              style={{ margin: "20px 10px" }}
+              onClick={() => navigate("/")}
+            >
+              Start Shopping
+            </Button>
+          </>
+        ) : (
+          <div>
+            {data.wishlist.map((product) => (
+              <ProductCard product={product} key={JSON.stringify(product)} />
+            ))}
+          </div>
+        )}
       </WishListDetails>
     </WishListContainer>
   );
